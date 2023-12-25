@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Indices</title>
+    <style>
+        /* Add your CSS styling here */
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .positive { color: green; }
+        .negative { color: red; }
+    </style>
+</head>
+<body>
+  <h1 class="{{ 'negative' if 'Closed' in market_status else 'positive' }}">Market Status: {{ market_status }} Today. (Updated at 5 PM IST)</h2>
+
+    <h1>Market Indices Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>1 Day</th>
+                <th>1 Week</th>
+                <th>1 Month</th>
+                <th>3 Months</th>
+                <th>6 Months</th>
+              <th>Investment Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for index, changes in data.items() %}
+            <tr>
+                <td>{{ index }}</td>
+                {% for change in changes.values() %}
+                <td class="{{ 'negative' if '-' in change or change == '₹0.0' else 'positive' }}">{{ change }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
